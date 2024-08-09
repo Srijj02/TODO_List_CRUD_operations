@@ -3,7 +3,6 @@ let addText = document.getElementById('addText');
 let date = document.getElementById('date');
 let discrption = document.getElementById('discrption');
 let errorMsg = document.getElementById('errorMsg');
-let myOverlay = document.getElementById('myOverlay');
 let tasks = document.getElementById('tasks');
 let addBtn = document.getElementById('addBtn');
 
@@ -15,14 +14,9 @@ function tst(e) {
 }
 
 
-console.log("hello");
-
-
 form.addEventListener("submit", (e) => {
     e.preventDefault();
-    console.log('helooooooooooo');
-    // console.log(dateTime.value);
-    // console.log(date.value);
+    console.log('hello');
     validate(e);
 })
 
@@ -48,19 +42,10 @@ function validate(e) {
     }
     if (addText.value === "" || date.value === "" || discrption.value === "") {
         errorMsg.innerHTML = "Please fill the empty fields";
-        myOverlay.style.display = "block";
+        addform.style.display = 'block';
     }
     else {
         errorMsg.innerHTML = "";
-        // let len = dateTime.value.length;
-
-        // for (let i = 0; i < 10; i++) {
-        //     dateValue += dateTime.value.charAt(i);
-        // }
-
-        // for (let i = 11; i < len; i++) {
-        //     timeValue += dateTime.value.charAt(i)
-        // }
         console.log(date.value);
         storeData();
     }
@@ -69,13 +54,11 @@ function validate(e) {
 let data = [{}];
 
 function storeData() {
-    console.log("hiiii");
     data.push({
         taskNo: addText.value,
         date: date.value,
         discrption: discrption.value
     })
-    console.log("hiiii22");
 
     localStorage.setItem('data', JSON.stringify(data));
     console.log(JSON.stringify(data));
@@ -99,44 +82,33 @@ function add() {
         <span id="date">${val.date}</span>
         <p>${val.discrption}</p>
         <span class="options">
-            <i onclick="editTask(this)" id="edit" class="fa-regular fa-pen-to-square"></i>
-            <i onclick="deleteTask(this)" id="delete" class="fa-regular fa-trash-can"></i>
+            <i onclick="editTask(${index})" id="edit" class="fa-regular fa-pen-to-square"></i>
+            <i onclick="deleteTask(${index})" id="delete" class="fa-regular fa-trash-can"></i>
         </span>
     </div>`);
     })
     
-    myOverlay.style.display = "none";
+    addform.style.display = 'block';
 }
 
-function deleteTask(ele) {
-    ele.parentElement.parentElement.remove();
-    data.splice(ele.parentElement.parentElement,1);
+function deleteTask(index) {
+    // ele.parentElement.parentElement.remove();
+    data.splice(index,1);
     localStorage.setItem("data",JSON.stringify(data));
+    add();
 }
 
-function editTask(ele) {
+function editTask(index) {
 
-    let val = ele.parentElement.parentElement;
-    myOverlay.style.display = "block";
+    let val = data[index];
+    
+    addText.value = val.taskNo;
+    date.value = val.date;
+    discrption.value = val.discrption;
 
+    deleteTask(index);
 
-
-
-    // console.log(val.children[1].children[0].innerHTML);
-    // console.log(val.children[4].innerHTML);
-    // console.log(val.children[5].innerHTML);
-    // console.log(val.children[6].innerHTML);
-
-
-
-    // console.log(val.children[4].innerHTML.trim()+"T"+val.children[5].innerHTML.trim());
-
-    addText.value = val.children[1].children[0].innerHTML;
-    date.value = val.children[4].innerHTML;
-    discrption.value = val.children[5].innerHTML;
-
-    deleteTask(ele);
-
+    addform.style.display = 'block';
     // val.remove();
     // localStorage.removeItem()
 
