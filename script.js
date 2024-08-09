@@ -66,9 +66,6 @@ function validate(e) {
     }
 }
 
-
-
-
 let data = [{}];
 
 function storeData() {
@@ -87,15 +84,8 @@ function storeData() {
     addText.value = "";
     date.value = "";
     discrption.value = "";
-    
-
 
 }
-
-
-
-
-
 
 function add() {
     // e.preventDefault();
